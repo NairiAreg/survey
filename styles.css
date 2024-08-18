@@ -79,21 +79,40 @@ h2 {
   font-weight: bold;
   color: #3498db;
 }
+.option input:checked + label img {
+  border: 7px solid #3498db;
+}
 
 .option.other {
   flex-basis: 100%;
   display: flex;
   align-items: center;
   justify-content: flex-start;
+  margin-top: 20px;
 }
 
 .other-input {
-  display: none;
   margin-left: 10px;
-  padding: 5px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  width: 200px;
+  padding: 10px 15px;
+  border: 2px solid #3498db;
+  border-radius: 20px;
+  width: calc(100% - 80px);
+  font-size: 16px;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+.other-input:focus {
+  border-color: #2980b9;
+  box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+}
+
+.other-input::placeholder {
+  color: #95a5a6;
+}
+
+.option.other label {
+  min-width: 70px;
 }
 
 .submit-button {
@@ -317,7 +336,7 @@ h2 {
 
 .running-line {
   display: flex;
-  animation: runningLine 20s linear infinite;
+  animation: runningLine 5s linear infinite;
 }
 
 .units div {

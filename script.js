@@ -52,26 +52,33 @@ const question5Options = [
   { value: "Այլ" },
 ];
 
+function scrollToTop() {
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth",
+  });
+}
+
 function createOptions(questionId, options, maxSelections = null) {
   const optionsContainer = document.querySelector(`#${questionId} .options`);
   options.forEach((option, index) => {
     const optionElement = document.createElement("div");
     optionElement.className = "option";
     optionElement.innerHTML = `
-        <input type="${
-          maxSelections ? "checkbox" : "radio"
-        }" id="${questionId}-${index}" name="${questionId}" value="${
+          <input type="${
+            maxSelections ? "checkbox" : "radio"
+          }" id="${questionId}-${index}" name="${questionId}" value="${
       option.value
     }">
-        <label for="${questionId}-${index}">
-          ${
-            option.image
-              ? `<img src="${option.image}" alt="${option.value}">`
-              : ""
-          }
-          <span>${option.value}</span>
-        </label>
-      `;
+          <label for="${questionId}-${index}">
+            ${
+              option.image
+                ? `<img src="${option.image}" alt="${option.value}">`
+                : ""
+            }
+            <span>${option.value}</span>
+          </label>
+        `;
     optionsContainer.appendChild(optionElement);
 
     const input = optionElement.querySelector("input");
@@ -94,12 +101,12 @@ function createOptions(questionId, options, maxSelections = null) {
     const otherOption = document.createElement("div");
     otherOption.className = "option other";
     otherOption.innerHTML = `
-        <input type="${
-          maxSelections ? "checkbox" : "radio"
-        }" id="${questionId}-other" name="${questionId}" value="other">
-        <label for="${questionId}-other">Այլ</label>
-        <input type="text" class="other-input" placeholder="Խնդրում ենք նշել">
-      `;
+          <input type="${
+            maxSelections ? "checkbox" : "radio"
+          }" id="${questionId}-other" name="${questionId}" value="other">
+          <label for="${questionId}-other">Այլ</label>
+          <input type="text" class="other-input" placeholder="Խնդրում ենք նշել">
+        `;
     optionsContainer.appendChild(otherOption);
 
     const otherCheckbox = otherOption.querySelector(
@@ -107,14 +114,9 @@ function createOptions(questionId, options, maxSelections = null) {
     );
     const otherInput = otherOption.querySelector(".other-input");
 
-    otherCheckbox.addEventListener("change", () => {
-      otherInput.style.display = otherCheckbox.checked
-        ? "inline-block"
-        : "none";
-    });
-
     otherInput.addEventListener("input", () => {
       otherCheckbox.checked = otherInput.value.trim() !== "";
+      otherCheckbox.value = otherInput.value.trim() || "other";
     });
   }
 }
@@ -138,13 +140,15 @@ function initializeSurvey() {
 
     // Handle "Other" option
     const otherInput = currentQuestionElement.querySelector(".other-input");
-    if (
-      otherInput &&
-      answers.includes("other") &&
-      otherInput.value.trim() !== ""
-    ) {
-      answers = answers.filter((a) => a !== "other");
-      answers.push(otherInput.value.trim());
+    if (otherInput && otherInput.value.trim() !== "") {
+      const otherCheckbox = currentQuestionElement.querySelector(
+        "#" + questionId + "-other"
+      );
+      otherCheckbox.checked = true;
+      otherCheckbox.value = otherInput.value.trim();
+      if (!answers.includes(otherInput.value.trim())) {
+        answers.push(otherInput.value.trim());
+      }
     }
 
     if (answers.length === 0 && questionId !== "question6") {
@@ -158,14 +162,16 @@ function initializeSurvey() {
       questions[currentQuestion].style.display = "block";
       submitButton.textContent =
         currentQuestion === questions.length - 1 ? "ուղարկել" : "հաջորդը";
+      scrollToTop(); // Scroll to top after moving to the next question
     } else {
       const data = {
         question1: formData.getAll("question1").join(", "),
-        question2: formData.get("question2"),
+        question2: formData.getAll("question2").join(", "),
         question3: formData.getAll("question3").join(", "),
       };
 
-      // Disable submit button
+      console.log("data", data);
+
       submitButton.disabled = true;
       submitButton.textContent = "Ուղարկվում է...";
 
