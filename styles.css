@@ -1,0 +1,358 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.question {
+  margin-bottom: 20px;
+}
+
+.container {
+  max-width: 100%;
+  height: 100vh;
+  margin: 0 auto;
+}
+
+.survey-form {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+}
+
+h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: #2c3e50;
+}
+
+.subtitle {
+  font-size: 16px;
+  color: #7f8c8d;
+  margin-bottom: 20px;
+}
+
+.options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.option {
+  flex-basis: calc(33.333% - 20px);
+  text-align: center;
+  transition: transform 0.3s ease;
+}
+
+.option:hover {
+  transform: translateY(-5px);
+}
+
+.option img {
+  width: 100%;
+  border-radius: 8px;
+  height: 160px;
+  margin-bottom: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  object-fit: cover;
+}
+
+.option label {
+  display: block;
+  cursor: pointer;
+}
+
+.option input[type="checkbox"],
+.option input[type="radio"] {
+  display: none;
+}
+
+.option input:checked + label {
+  font-weight: bold;
+  color: #3498db;
+}
+
+.option.other {
+  flex-basis: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.other-input {
+  display: none;
+  margin-left: 10px;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 200px;
+}
+
+.submit-button {
+  display: block;
+  width: 100%;
+  padding: 12px;
+  background-color: #3498db;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-size: 18px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.submit-button:hover {
+  background-color: #2980b9;
+}
+
+/* Styles for the second question with big images */
+#question2 .options,
+#question3 .options {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 20px;
+}
+
+#question2 .option,
+#question3 .option {
+  flex-basis: 100%;
+}
+
+#question2 .option img,
+#question3 .option img {
+  height: auto;
+  object-fit: cover;
+}
+
+/* Styles for the feedback textarea */
+#feedback {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  resize: vertical;
+}
+
+/* Chakra UI-like Toaster styles */
+.toaster {
+  position: fixed;
+  bottom: -100px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 12px 20px;
+  border-radius: 4px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  z-index: 9999;
+  opacity: 0;
+  transition: opacity 0.3s ease, bottom 0.3s ease;
+  max-width: 90%;
+  text-align: center;
+  pointer-events: none;
+}
+
+.toaster.show {
+  opacity: 1;
+  bottom: 20px;
+}
+
+.toaster.error {
+  background-color: #e53e3e;
+  color: #fff;
+}
+
+.toaster.success {
+  background-color: #38a169;
+  color: #fff;
+}
+
+/* Add a debug style to make the toaster always visible during development */
+.toaster.debug {
+  opacity: 0.5;
+  bottom: 20px;
+  background-color: #3498db; /* Different color for debug mode */
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .option img {
+    height: 230px;
+  }
+  .option {
+    flex-basis: calc(50% - 20px);
+  }
+
+  #question2 .options {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .option {
+    flex-basis: 100%;
+  }
+
+  #question2 .options {
+    grid-template-columns: 1fr;
+  }
+
+  .toaster {
+    width: 90%;
+  }
+}
+
+/* Loader styles */
+.loader {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 9999;
+}
+
+.loader:after {
+  content: " ";
+  display: block;
+  width: 64px;
+  height: 64px;
+  margin: 8px;
+  border-radius: 50%;
+  border: 6px solid #3498db;
+  border-color: #3498db transparent #3498db transparent;
+  animation: loader 1.2s linear infinite;
+}
+
+@keyframes loader {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.thank-you-message {
+  text-align: center;
+  padding: 40px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
+  max-width: 500px;
+  margin: 40px auto;
+}
+
+.thank-you-icon {
+  font-size: 64px;
+  color: #38a169;
+  margin-bottom: 24px;
+}
+
+.thank-you-message h2 {
+  color: #2d3748;
+  font-size: 28px;
+  margin-bottom: 16px;
+  font-weight: 600;
+}
+
+.thank-you-message p {
+  color: #4a5568;
+  font-size: 18px;
+  line-height: 1.6;
+  margin-bottom: 24px;
+}
+
+.thank-you-message .emoji {
+  font-size: 32px;
+  margin-top: 16px;
+}
+
+/* Disabled button styles */
+.submit-button:disabled {
+  background-color: #a0aec0;
+  cursor: not-allowed;
+}
+
+.units {
+  width: max-content;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  pointer-events: none;
+  padding: 0 10px;
+}
+
+/* original design */
+.units > * {
+  font: bolder 5rem/5rem "EB Garamond";
+  background-image: url("./imgs/photo-1579268351234-073f85929562.jpeg");
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  overflow: hidden;
+}
+
+/* reflections */
+.units > :last-child {
+  transform: rotatex(180deg) translatey(15px);
+  filter: blur(10px) brightness(1.5);
+}
+
+.running-line-container {
+  width: 100%;
+  overflow: hidden;
+  background-color: #f0f0f0;
+  padding: 30px 0;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+}
+
+.running-line {
+  display: flex;
+  animation: runningLine 20s linear infinite;
+}
+
+.units div {
+  white-space: nowrap;
+  padding: 0 40px;
+}
+
+@keyframes runningLine {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .units > * {
+    font-size: 3rem;
+    line-height: 3rem;
+  }
+
+  .units div {
+    padding: 0 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .units > * {
+    font-size: 2rem;
+    line-height: 2rem;
+  }
+
+  .units div {
+    padding: 0 15px;
+  }
+}

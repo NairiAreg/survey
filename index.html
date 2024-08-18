@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="hy">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Custom Survey</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <form id="surveyForm" class="survey-form">
+        <div id="question1" class="question-container">
+          <h2>
+            Եթե դուք ունենաք հնարավորություն բազմաթիվ փոքր նկարներից ստանալ ձեր
+            կամ ձեր սիրելիի դիմանկարը (կամ ցանկացալ այլ նկար) Ինչ փոքր նկարներից
+            կուզենայիք այն ստանալ՞
+          </h2>
+          <p class="subtitle">Ընտրեք առավելագույնը 6 տարբերակ:</p>
+          <div class="options"></div>
+        </div>
+        <div id="question2" class="question-container" style="display: none">
+          <h2>Ինչ խտության խճանկար եք նախընտրում՞</h2>
+          <p class="subtitle">Ընտրեք առավելագույնը 3 տարբերակ:</p>
+          <div class="options big-images"></div>
+        </div>
+        <div id="question3" class="question-container" style="display: none">
+          <h2>Ինչ չափսի եք նախընտրում խճանկարը՞</h2>
+          <p class="subtitle">Ընտրեք առավելագույնը 3 տարբերակ:</p>
+          <div class="options"></div>
+        </div>
+        <!-- <div id="question4" class="question-container" style="display: none">
+          <h2>
+            Ինչ գնային միջակայք եք նախընտրում ձեր հավանած չափսով խճանկարի համար՞
+          </h2>
+          <p class="subtitle">Ընտրեք առավելագույնը 3 տարբերակ:</p>
+          <div class="options"></div>
+        </div>
+        <div id="question5" class="question-container" style="display: none">
+          <h2>Ինչ նպատակով կպատվիրեիք խճանկարը՞</h2>
+          <p class="subtitle">Ընտրեք առավելագույնը 3 տարբերակ:</p>
+          <div class="options"></div>
+        </div>
+        <div id="question6" class="question-container" style="display: none">
+          <h2>Առաջարկ / Դիմում / Բողոք՞</h2>
+          <textarea id="feedback" rows="4" cols="50"></textarea>
+        </div> -->
+        <button type="submit" id="submitButton" class="submit-button">
+          հաջորդը
+        </button>
+      </form>
+    </div>
+    <div id="toaster" class="toaster"></div>
+    <div id="loader" class="loader"></div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+    <script src="./script.js"></script>
+  </body>
+</html>
