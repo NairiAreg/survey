@@ -35,8 +35,9 @@ h2 {
 
 .subtitle {
   font-size: 16px;
-  color: #7f8c8d;
+  color: #ff6a00;
   margin-bottom: 20px;
+  font-weight: 700;
 }
 
 .options {
